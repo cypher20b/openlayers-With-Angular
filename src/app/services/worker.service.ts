@@ -27,10 +27,10 @@ export class WorkerService {
   map: any;
   highlightStyle = new Style({
     fill: new Fill({
-      color: '##FF0000',
+      color: 'blue',
     }),
     stroke: new Stroke({
-      color: '##FF0000',
+      color: '#FF0000',
       width: 3,
     }),
   });
@@ -49,8 +49,8 @@ export class WorkerService {
 
     map_color = new Style({
       stroke: new Stroke({
-        color: "#FF0000",
-        // width: 1.5
+        color: "blue",
+        width: 1.5
       })
     })
 

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { WorkerService } from '../services/worker.service';
 import { Router } from '@angular/router';
 import Overlay from 'ol/Overlay.js';
+import * as bootstrap from 'bootstrap';
+import {fromLonLat, toLonLat} from 'ol/proj.js';
+import {toStringHDMS} from 'ol/coordinate.js';
 
 @Component({
   selector: 'app-map',
@@ -17,8 +20,12 @@ export class MapComponent implements OnInit {
 
 
 ngOnInit(): void {
+  const popup = new Overlay({
+    element: document.getElementById('popup')!,
+  });
   let self = this
   this.service.ngOnInit()
+  self.service.map.addOverlay(popup);
   this.service.map.on('click', (e: any) => {
     // console.log(e)
     // console.log(this.service.map)
@@ -32,22 +39,23 @@ ngOnInit(): void {
   this.service.map.forEachFeatureAtPixel(e.pixel, function (feature: any, layer: any) {
     self.service.place = e.coordinate;
     self.service.zoomValue = 18.5;
-    // console.log(e.target);
-    // console.log(layer);
-    let partialInfo = document.createElement('div')
-    partialInfo.innerHTML = `<span class="partial-info">${feature}</span>`
-    self.service.map.addOverlay(new Overlay({
-      element: partialInfo
-    }))
-    if (self.service.selected !== null) {
-      console.log('if');
-      self.service.selected.setStyle(undefined);
-      self.service.selected = null;
-    }
+    const element = popup.getElement();
+    const coordinate = e.coordinate;
+    const hdms = toStringHDMS(toLonLat(coordinate));
+    popup.setPosition(coordinate);
+    let popover = new bootstrap.Popover(element!, {
+      animation: false,
+      container: element,
+      content: '<p>The location you clicked was:</p><code>' + hdms + '</code>',
+      html: true,
+      placement: 'top',
+      title: 'Welcome to OpenLayers',
+    });
+    popover.show();
 
 
     
-    else{
+    if (self.service.selected === null){
       console.log('else')
       self.service.itsComingFromMap = true
       self.service.searchResult.push({name:feature.values_, pixel:e.pixel, coodinate: e.coordinate})
