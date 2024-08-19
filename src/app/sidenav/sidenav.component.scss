@@ -1,0 +1,25 @@
+ul{ 
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    li{
+        display: grid;
+        grid-template-columns: 30px auto;
+        color: #3f51b5;
+        padding: 0.5rem 0.2rem;
+        transition: background-color 0.2s ease-in-out;
+        &:hover{
+            cursor: pointer;
+            color:#ffffff;
+            background-color: #3f51b5;
+        }
+        a{
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+}

@@ -1,139 +1,17 @@
-<div id="map" class="map" style="z-index: index 1;">
-    <nav class="navbar navbar-light bg-light" style="position: absolute; z-index: 2; width: 100%; justify-content: center; background-color: #fff;">
-      <div style="display: flex; justify-content:center; align-items:center">
-        <a class="navbar-brand"><marquee behavior="scroll" direction="left">
-          <h5>Community 22 Web based GIS Application</h5>
-        </marquee></a>
-      </div>
-    </nav>      
-      <!-- <div class="searchBar">
-          <div class="input-group mb-3">
-            <button class="btn btn-primary" (click)="search()" type="button" id="button-addon2"><span class="fa fa-search form-control-feedback"></span></button>
-            </div>
-      </div> -->
+<div class="main-container d-flex">
+  <aside>
+    <app-sidenav></app-sidenav>
+  </aside>
+  <div id="map" class="map" style="z-index: index 1;">
+      <nav class="navbar navbar-light bg-light" style="position: absolute; z-index: 2; width: 100%; justify-content: center; background-color: #fff;">
+        <div style="display: flex; justify-content:center; align-items:center">
+          <a class="navbar-brand">
+            <marquee behavior="scroll" direction="left">
+            <h5>Community 22 Web based GIS Application</h5>
+          </marquee></a>
+        </div>
+      </nav>      
+      
+  </div>
 
-      <div class="my-side-nav p-1 card">
-        <div class="card">
-          <div class="input-group row d-flex" style="--bs-gutter-x: 0;">
-            <div class="col-8">
-              <input type="text" style="background-color: rgba(255, 255, 255, 0.74); border: 0px;" [(ngModel)]="searchKeyWord" class="form-control" aria-label="Text input with segmented dropdown button" placeholder="Search for plot">
-            </div>
-            
-            <select [(ngModel)]="Search_by" class="form-select col" aria-label="Default select example">
-              <option selected value="">--OPTIONS--</option>
-              <option value="name">By Name</option>
-              <option value="plot">By Plot</option>
-            </select>
-            <button type="button" *ngIf="Search_by" (click)="search()" class="btn btn-outline-primary col"><span class="fa fa-search form-control-feedback"></span></button>
-          </div>
-        </div>
-        <div *ngIf="searchResult.length" >
-          <hr>
-          <small *ngIf="searchResult.length"><i>Your search got {{searchResult.length}} result(s)</i></small>
-          <div class="searchresults" style="background:none; max-height: 300px; overflow-y: scroll;">
-            <div class="accordion" id="accordionExample">
-              <div *ngFor="let result of searchResult; let i = index" class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button (click)="zoomToResult(i)" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    {{result.name.Prop_Owner}}
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                  <div class="accordion-body p-1">
-                    <div *ngIf="searchResult.length" class="card">
-                      <div class="card-title">
-                        <ul class="list-group">
-                          <div class="row">
-                            <li class="list-group-item active" aria-current="true">
-                              LAND OWNER : 
-                              <span>
-                                {{searchResult[0].name.Prop_Owner}}
-                              </span>
-                            </li>
-                          </div>
-                          <div class="row">
-                            <li class="list-group-item active">
-                              PROPERTY NUMBER : 
-                              <span>
-                                {{searchResult[0].name.Propcode}}
-                              </span>
-                            </li>
-                          </div>
-                          <div class="row">
-                            <li class="list-group-item active">
-                              LAND LOCATION:
-                              <span>
-                                {{searchResult[0].name.Locality}}
-                              </span>
-                            </li>
-                          </div>
-                          <div class="row">
-                            <li class="list-group-item active">
-                              LAND USAGE:
-                              <span>
-                                {{searchResult[0].name.LandUse}}
-                              </span>
-                            </li>
-                          </div>
-                          <div class="row">
-                            <li class="list-group-item active">
-                              LAND SIZE:
-                              <span>
-                                {{searchResult[0].name.Acre}} m2
-                              </span>
-                            </li>
-                          </div>
-                          <!-- <li class="list-group-item">And a fifth one</li> -->
-                        </ul>
-                      </div>
-                      <div class="card-body">
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- <ul class="list-group">
-              <li class="list-group-item" *ngFor="let result of searchResult; let i = index"><span (click)="zoomToResult(i)">{{result.name.Prop_Owner}}</span></li>
-              <button *ngFor="let result of searchResult; let i = index" type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" data-bs-title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">{{result.name.Prop_Owner}}</button>
-            </ul> -->
-          </div>
-          <button class="btn btn-primary" (click)="clearSearch()">clear</button>
-        </div>
-        <!-- <div *ngIf="searchResult.length && itsComingFromMap" class="card">
-          <div class="card-title">
-            <ul class="list-group">
-              <li class="list-group-item active" aria-current="true">
-                Land Owner : 
-                <span>
-                  {{searchResult[0].name.Prop_Owner}}
-                </span>
-              </li>
-              <li class="list-group-item">
-                Property Number: 
-                <span>
-                  {{searchResult[0].name.Propcode}}
-                </span>
-              </li>
-              <li class="list-group-item">
-                Land Location:
-                <span>
-                  {{searchResult[0].name.Locality}}
-                </span>
-              </li>
-              <li class="list-group-item">
-                Land Usage:
-                <span>
-                  {{searchResult[0].name.LandUse}}
-                </span>
-              </li>
-              <li class="list-group-item">And a fifth one</li>
-            </ul>
-          </div>
-          <div class="card-body">
-            
-          </div>
-        </div> -->
-      </div>
 </div>
